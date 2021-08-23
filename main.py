@@ -268,6 +268,7 @@ async def bab(message: types.Message, state: FSMContext):
     ban_user_teg = message.text
     if ban_user_teg == '-':
         await bot.send_message(message.from_user.id, '❌Действие отменено❌')
+        await state.finish()
     else:
         connect = sqlite3.connect('users_info.bd')
         cursor = connect.cursor()
@@ -292,9 +293,10 @@ async def bab(message: types.Message, state: FSMContext):
                 cursor.execute("INSERT INTO ban_users VALUES(?,?)", ban_user_info)
                 connect.commit()
                 await bot.send_message(admin_id, '✅Пользователь упешно забанен✅')
+                
+                await state.finish()
             else:
                 pass
-        await state.finish()
 
 @dp.callback_query_handler(lambda c: c.data == 'text_meiling', state=None)
 async def text_mailing(callback_query: types.CallbackQuery):
@@ -307,6 +309,7 @@ async def text_meiling_hendler(message: types.Message, state: FSMContext):
     mailing_text = message.text
     if mailing_text == '-':
         await message.answer('Действие отменено')
+        await state.finish()
     else:
         connect = sqlite3.connect('users_info.bd')
         cursor = connect.cursor()
@@ -397,6 +400,7 @@ async def add_game(message: types.Message, state: FSMContext):
     acc = message.text
     if acc == '-':
         await bot.send_message(message.from_user.id, '❌Добавление Игрового аккаунта отменено❌')
+        await state.finish()
     else:
         connect = sqlite3.connect('products_list.bd')
         cursor = connect.cursor()
@@ -405,7 +409,7 @@ async def add_game(message: types.Message, state: FSMContext):
         connect.commit()
         await bot.send_message(admin_id, '✅Игровой аккаунт успешно добавлен✅')
 
-    await state.finish()
+        await state.finish()
 
 @dp.callback_query_handler(lambda c: c.data == 'add_youtube_premium')
 async def add_you(callback_query: types.CallbackQuery):
@@ -418,6 +422,7 @@ async def aff_acc_you(message: types.Message, state: FSMContext):
     acc = message.text
     if acc == '-':
         await bot.send_message(message.from_user.id, '❌Добавление YouTube аккаунта отменено❌')
+        await state.finish()
     else:
         connect = sqlite3.connect('products_list.bd')
         cursor = connect.cursor()
@@ -426,7 +431,7 @@ async def aff_acc_you(message: types.Message, state: FSMContext):
         connect.commit()
         await bot.send_message(admin_id, '✅YouTube аккаунт успешно добавлен✅')
 
-    await state.finish()
+        await state.finish()
 
 
 @dp.callback_query_handler(lambda c: c.data == 'add_spotify_premium')
@@ -440,6 +445,7 @@ async def add_account_spot(message: types.Message, state: FSMContext):
     acc = message.text
     if acc == '-':
         await bot.send_message(message.from_user.id, '❌Добавление Spotify аккаунта отменено❌')
+        await state.finish()
     else:
         connect = sqlite3.connect('products_list.bd')
         cursor = connect.cursor()
@@ -448,7 +454,7 @@ async def add_account_spot(message: types.Message, state: FSMContext):
         connect.commit()
         await bot.send_message(admin_id, '✅Spotify аккаунт успешно добавлен✅')
 
-    await state.finish()
+        await state.finish()
 
 
 @dp.message_handler(state=Btc_ass.reception)
@@ -456,6 +462,7 @@ async def btc_check_save(message: types.Message, state: FSMContext):
     btc_check = message.text
     if btc_check == '-':
         await message.reply('❌Добавление чека отменено❌')
+        await state.finish()
     else:
         connect = sqlite3.connect('btc_checks.bd')
         cursor = connect.cursor()
@@ -464,7 +471,7 @@ async def btc_check_save(message: types.Message, state: FSMContext):
         connect.commit()
         await bot.send_message(admin_id, '✅Чек успешно добавлен✅')
 
-    await state.finish()
+        await state.finish()
 
 @dp.callback_query_handler(lambda c: c.data == 'game_acc_hendler', state=None)
 async def game_acc_hendler(callback_query: types.CallbackQuery):
